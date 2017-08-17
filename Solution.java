@@ -8,19 +8,27 @@ import java.io.*;
 public class Solution {
     public static void main(String args[] ) throws Exception {
 
-        Scanner scan = new Scanner(new File("in.txt"));// System.in
-       	long M = scan.nextInt();
+		BufferedReader br = new BufferedReader(new FileReader("in.txt"));	
+		long M = Integer.parseInt(br.readLine());
+		long elem;
+
 		LinkedList L = new LinkedList();
+		String[] numberList;
+		String line;
 
-		while(scan.hasNextInt()){
-			long elem = scan.nextInt();
+		 while ((line = br.readLine()) != null){
+			numberList = line.split("\\s+");
 
-			if(L.size() == M){
-				L.remove_top();
+			for(String num : numberList){
+				elem = Long.parseLong(num);
+
+				if(L.size() >= M)
+					L.replace_top(elem);
+				else L.add(elem);
 			}
-			L.add(elem);
 		}
 		long r = L.findKthToLast(M);
+		
 		if(r == -1)
 			System.out.println("NIL");
 		else System.out.println(r);
@@ -44,16 +52,19 @@ class LinkedList{
 		if(size == 1){
 			head = last = n;
 		}else{
-			head.next = n;
-			last = n;
+			last.next = n;
+			last = last.next;
 		}
 	}
 
-	void remove_top(){
+	void replace_top(long elem){
 		if(head == null) return;
-		Node n = head.next;
-		head = n;
-		size --;
+		last.next = head;
+		last = last.next;
+		head = head.next;
+		last.next = null;
+		last.data = elem;
+		size++;
 	}
 	
 	long size(){
@@ -62,9 +73,21 @@ class LinkedList{
 
 	long findKthToLast(long k){
 		long toFind = size - k + 1;
+	
+		// System.out.println(toFind);
 		if(toFind <= 0 || k <= 0)
 			return -1;
 		return head.data;
+	}
+
+	void printList(){
+		Node curr = head;
+	
+		while(curr != null){
+			System.out.print(curr.data + " ");
+			curr = curr.next;
+		}
+		System.out.println();
 	}
 }
 
