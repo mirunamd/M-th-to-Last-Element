@@ -3,6 +3,7 @@
 For this question, you will write a program that, given a positive integer M and a list of integers L, outputs the list element M links away from the end of the list. For this program, we will use 1-indexing. That means mth_to_last(1) is the "1st-to-last" element, or simply the last element in the list. If you are given an invalid index, output NIL instead.
 
 **Examples**
+
 *Input:*
 
 > 4
@@ -19,7 +20,7 @@ For this question, you will write a program that, given a positive integer M and
 
 > 42
 
-*Output
+*Output*
 
 > NIL
 
